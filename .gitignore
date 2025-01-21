@@ -1,0 +1,6 @@
+__pycache__
+.vscode
+*.zip
+*.csv
+*.json
+*_submissions/
