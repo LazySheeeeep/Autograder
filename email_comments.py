@@ -4,7 +4,7 @@ from json import load
 import argparse
 
 def parse_arguments():
-    parser = argparse.ArgumentParser(description="Auto grading script for .hs files.")
+    parser = argparse.ArgumentParser(description="Batch emailing comments.")
     parser.add_argument('-cf', '--comments-file', type=str, default="comments.json")
     parser.add_argument('-an', '--assignment-name', type=str, required=True)
     parser.add_argument('-nt', '--not-test', action="store_true")
