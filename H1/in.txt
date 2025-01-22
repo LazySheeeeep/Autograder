@@ -1,0 +1,24 @@
+20
+fib 10
+fib 20
+fib 0
+fib 1
+fib 2
+
+20
+listReverse [1, 2, 3]
+listReverse "abc"
+
+20
+listAdd [1, 2] [3, 4]
+listAdd [1, 2, 3] [4, 5]
+listAdd [1, 2] [3, 4, 5]
+listAdd [1, 2, 3, 0] [-4, 5]
+
+20
+inList [1, 2, 3] 2
+inList "abc" 'b'
+
+20
+sumTailRec [1..10]
+sumTailRec [1, 2.1]
