@@ -3,9 +3,10 @@ import argparse
 import subprocess
 
 ERROR_STR = "*error*"
+EXCEPTION_STR = "*exception*"
 
 class GHCI:
-    def __init__(self, file):
+    def __init__(self, file: str):
         self.g = subprocess.Popen(
             ["ghci", file],
             stdin=subprocess.PIPE,
@@ -17,7 +18,7 @@ class GHCI:
         self.prompt = "ghci> "
         if self.flush():
             self.close()
-            raise Exception(f"{args.hs_file} load error")
+            raise Exception(f"{file} load error")
         
     def read_out(self):
         error = True
@@ -50,6 +51,8 @@ class GHCI:
             if output == '':  # error occured
                 self.flush()
                 output = ERROR_STR
+            elif "Exception" in output:
+                output = EXCEPTION_STR
             results.append(output)
         return results
 
