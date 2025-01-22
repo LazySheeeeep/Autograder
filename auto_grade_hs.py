@@ -120,9 +120,9 @@ if __name__ == "__main__":
     args = parse_arguments()
     
     if not os.path.exists(args.test_outputs):
-        ghci = GHCI(args.hs_file)
         test_inputs = load_file(args.test_inputs)
-        answerss = [ghci.test(commands) for commands in test_inputs]
+        test_inputs = [i[1:] for i in test_inputs]
+        answerss = get_answerss(args.hs_file, test_inputs)
         write_answers(answerss, args.test_outputs)
     else:
         info = prepare_info(args.test_inputs, args.test_outputs)
