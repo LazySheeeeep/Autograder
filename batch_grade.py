@@ -20,21 +20,20 @@ def parse_arguments():
     return parser.parse_args()
 
 def load_csv(filename):
-    grades = {}
+    scores = {}
 
     with open(filename, mode="r", encoding="utf-8") as csv_file:
         reader = csv.DictReader(csv_file)
         fieldnames = reader.fieldnames
-        
-        rows = list(reader)
 
-        for row in rows:
+        for row in list(reader):
             sfuid = row.get(SFUID_COL, "")
             if sfuid:
-                grades[sfuid] = row
+                scores[sfuid] = row
+                scores[sfuid][args.column_name] = 0.0  # initial score
             else:
                 ...
-    return grades, fieldnames
+    return scores, fieldnames
 
 def save_csv(output_file, fieldnames, content_dict):
     with open(output_file, mode="w", encoding="utf-8", newline="") as csv_file:
