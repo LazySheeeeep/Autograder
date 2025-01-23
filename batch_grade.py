@@ -3,6 +3,7 @@ import glob
 import argparse
 import csv
 import json
+from tqdm import tqdm
 from auto_grade_hs import prepare_info, get_answerss, grade
 
 SFUID_COL = "SIS User ID"
@@ -49,7 +50,7 @@ if __name__ == "__main__":
     scores, fieldnames = load_csv(args.score_file)
     info = prepare_info(args.test_inputs, args.test_outputs)
     
-    for hs_file in glob.glob(os.path.join(args.submission_directory, "*.hs")):
+    for hs_file in tqdm(glob.glob(os.path.join(args.submission_directory, "*.hs"))):
         try:
             basename = os.path.basename(hs_file)
             sfuid = basename[-12:-3]
@@ -64,8 +65,6 @@ if __name__ == "__main__":
             scores[sfuid][args.column_name] = score
             if comment is not None:
                 comments[scores[sfuid]["ID"]] = comment
-
-            print(f"Graded {sfuid}", end='\r')
 
         except Exception as e:
             print(f"Failed to grade {hs_file}: {e}")
