@@ -6,7 +6,6 @@ import json
 from auto_grade_hs import prepare_info, get_answerss, grade
 
 SFUID_COL = "SIS User ID"
-CMPTID_COL = "SIS Login ID"
 
 def parse_arguments():
     parser = argparse.ArgumentParser(description="Batch grading script for Haskell (.hs) files.")
@@ -64,7 +63,7 @@ if __name__ == "__main__":
             score, comment = grade(answerss, info)
             scores[sfuid][args.column_name] = score
             if comment is not None:
-                comments[scores[sfuid][CMPTID_COL]] = comment
+                comments[scores[sfuid]["ID"]] = comment
 
             print(f"Graded {sfuid}", end='\r')
 
