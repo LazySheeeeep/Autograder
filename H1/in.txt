@@ -1,24 +1,49 @@
 20
-fib 10
+fib 25
+fib 22
 fib 20
-fib 0
+fib 17
+fib 14
+fib 10
+fib 6
 fib 1
 fib 2
+fib 0
 
 20
 listReverse [1, 2, 3]
 listReverse "abc"
+listReverse [1, 2, 3, 1000, 4545, 665]
+listReverse ["ab", "bc", "ac"]
+listReverse ['a', 'b', 'c']
 
 20
 listAdd [1, 2] [3, 4]
-listAdd [1, 2, 3] [4, 5]
+listAdd [1..9] [4, 5]
 listAdd [1, 2] [3, 4, 5]
 listAdd [1, 2, 3, 0] [-4, 5]
+listAdd [1, 2] [-4, 5, 66, 22, 88]
+listAdd [1, 2] []
+listAdd [] [3, 4, 5]
+listAdd [1] [2]
+listAdd [] []
+listAdd [0, 0, 0] [1, 1, 1, 1]
 
 20
 inList [1, 2, 3] 2
-inList "abc" 'b'
+inList [1, 2, 3] 4
+inList "hello" 'e'
+inList "world" 'z'
+inList [] 5
+inList [True, False, True] False
+inList [1.1, 2.2, 3.3] 2.2
+inList ['a', 'b', 'c'] 'c'
+inList [5] 5
+inList [1..10] 0
 
 20
-sumTailRec [1..10]
-sumTailRec [1, 2.1]
+sumTailRec [1..9900000]
+sumTailRec [1..9990000]
+sumTailRec [1..9999000]
+sumTailRec [1..9999900]
+sumTailRec [1..10000000]
