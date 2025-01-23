@@ -52,6 +52,7 @@ class GHCI:
                 self.flush()
                 output = ERROR_STR
             elif "Exception" in output:
+                self.flush()
                 output = EXCEPTION_STR
             results.append(output)
         return results
