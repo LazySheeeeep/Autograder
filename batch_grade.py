@@ -15,12 +15,16 @@ def parse_arguments():
     parser.add_argument('-cf', '--comments-file', type=str, default="comments.json")
     return parser.parse_args()
 
-def grade_(hs_file, userid):
-    answerss = get_answerss(hs_file=hs_file, test_inputs=info["test_inputs"])
-    score, comment = grade(answerss, info)
-    scores[userid] = score
-    if comment is not None:
-        comments[userid] = comment
+def grade_(hs_file):
+    try:
+        answerss = get_answerss(hs_file=hs_file, test_inputs=info["test_inputs"])
+        score, comment = grade(answerss, info)
+        userid = os.path.basename(hs_file).split("_")[1]
+        scores[userid] = score
+        if comment is not None:
+            comments[userid] = comment
+    except Exception as e:
+        print(f"Failed to grade {hs_file}: {e}")
 
 if __name__ == "__main__":
     args = parse_arguments()
@@ -28,11 +32,8 @@ if __name__ == "__main__":
     comments = {}
     scores = {}
     for hs_file in tqdm(glob.glob(os.path.join(args.submission_directory, "*.hs"))):
-        try:
-            userid = os.path.basename(hs_file).split("_")[1]
-            grade_(hs_file, userid)
-        except Exception as e:
-            print(f"Failed to grade {hs_file}: {e}")
+        grade_(hs_file)
+        
     
     with open(args.scores_file, "w") as file:
         json.dump(scores, file, indent=4)
