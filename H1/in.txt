@@ -42,8 +42,8 @@ inList [5] 5
 inList [1..10] 0
 
 20
-sumTailRec [1..9900000]
-sumTailRec [1..9990000]
-sumTailRec [1..9999000]
-sumTailRec [1..9999900]
-sumTailRec [1..10000000]
+sumTailRec [-5500000..5506000] + sumTailRec [1.1,2.2,3.3]
+sumTailRec [-5550000..5505000] + sumTailRec [-1.1,23.3]
+sumTailRec [-5550500..5555000]
+sumTailRec [-5500000..5500000]
+sumTailRec [-999999..9000000]
