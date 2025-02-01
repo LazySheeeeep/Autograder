@@ -3,7 +3,7 @@ import glob
 import argparse
 import json
 from tqdm import tqdm
-from auto_grade_hs import prepare_info, get_answerss, grade
+from auto_grade_hs import prepare_info, get_answerss, grade_answerss
 from auto_check import check_ok
 import shutil
 
@@ -19,10 +19,10 @@ def parse_arguments():
     parser.add_argument('-m', '--model', type=str, help="Model name for the ollama service.")
     return parser.parse_args()
 
-def grade_(hs_file):
+def grade_file(hs_file):
     try:
         answerss = get_answerss(hs_file=hs_file, test_inputs=info["test_inputs"])
-        score, comment = grade(answerss, info)
+        score, comment = grade_answerss(answerss, info)
         userid = os.path.basename(hs_file).split("_")[1]
         scores[userid] = score
         if comment is not None:
@@ -46,7 +46,7 @@ if __name__ == "__main__":
             prompt = f.read()
     
     for hs_file in tqdm(glob.glob(os.path.join(args.submission_directory, "*.hs"))):
-        grade_(hs_file)
+        grade_file(hs_file)
 
     if len(double_check_files) > 0:
         print(f"{len(double_check_files)} files need to double-check.")

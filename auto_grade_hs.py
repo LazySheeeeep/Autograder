@@ -87,7 +87,7 @@ def get_answerss(hs_file, test_inputs):
     ghci.close()
     return answerss
 
-def grade(answerss, info):
+def grade_answerss(answerss, info):
     # scoring
     score = 0
     mistakes = {}
@@ -131,5 +131,5 @@ if __name__ == "__main__":
     else:
         info = prepare_info(args.test_inputs, args.test_outputs)
         answerss = get_answerss(hs_file=args.hs_file, test_inputs=info["test_inputs"])
-        score, comment = grade(answerss, info)
+        score, comment = grade_answerss(answerss, info)
         print(score, "\n", comment)
