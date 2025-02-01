@@ -4,6 +4,8 @@ import argparse
 import json
 from tqdm import tqdm
 from auto_grade_hs import prepare_info, get_answerss, grade
+from auto_check import check_ok
+import shutil
 
 def parse_arguments():
     parser = argparse.ArgumentParser(description="Batch grading script for Haskell (.hs) files.")
@@ -13,6 +15,8 @@ def parse_arguments():
     parser.add_argument('-to', '--test-outputs', type=str, default="out.txt")
     parser.add_argument('-sf', '--scores-file', type=str, default="scores.json")
     parser.add_argument('-cf', '--comments-file', type=str, default="comments.json")
+    parser.add_argument('-pf', '--prompt-file', type=str, default="prompt.txt")
+    parser.add_argument('-m', '--model', type=str, help="Model name for the ollama service.")
     return parser.parse_args()
 
 def grade_(hs_file):
@@ -23,18 +27,10 @@ def grade_(hs_file):
         scores[userid] = score
         if comment is not None:
             comments[userid] = comment
-        if assistance and check(hs_file):
-            double_check_files.append(hs_file)
+        if assistance and not check_ok(hs_file, prompt, args.model):
+            double_check_files.append((userid, hs_file))
     except Exception as e:
         print(f"Failed to grade {hs_file}: {e}")
-
-def check(hs_file: str) -> bool:
-    with open(hs_file, 'r') as f:
-            script_content = f.read()
-    response = ollama.chat(model="qwen2.5-coder-32b-instruct-q4_k_m",
-                           messages=[{"role": "user", "content": prompt + script_content}],
-                           options={"temperature":0})
-    return "0" in response.message.content  # True if sth is wrong
 
 if __name__ == "__main__":
     args = parse_arguments()
@@ -44,19 +40,21 @@ if __name__ == "__main__":
     assistance = False
     double_check_files = []
 
-    if os.path.exists("prompt.txt"):
+    if os.path.exists(args.prompt_file) and args.model is not None:
         assistance = True
-        with open("prompt.txt", 'r') as f:
+        with open(args.prompt_file, 'r') as f:
             prompt = f.read()
-        import ollama
     
     for hs_file in tqdm(glob.glob(os.path.join(args.submission_directory, "*.hs"))):
         grade_(hs_file)
 
     if len(double_check_files) > 0:
-        print("Double-check the following files:")
-        for f in double_check_files:
-            print(f)
+        print(f"{len(double_check_files)} files need to double-check.")
+        double_check_dir = "double_check"
+        os.makedirs(double_check_dir, exist_ok=True)
+        for userid, f in double_check_files:
+            new_filename = os.path.join(double_check_dir, f"{userid}.hs")
+            shutil.copy(f, new_filename)
     
     with open(args.scores_file, "w") as file:
         json.dump(scores, file, indent=4)
