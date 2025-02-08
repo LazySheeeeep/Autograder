@@ -1,0 +1,69 @@
+20
+listZip (Cons 1 (Cons 2 (Cons 3 Empty))) (Cons 'a' (Cons 'b' (Cons 'c' Empty)))
+listZip (Cons 42 Empty) (Cons 99 Empty)
+listZip (Cons 5 (Cons 10 (Cons 15 (Cons 20 Empty)))) (Cons 'x' (Cons 'y' Empty))
+listZip Empty (Cons 1 (Cons 2 (Cons 3 Empty)))
+listZip (Cons 1 (Cons 2 Empty)) (Cons 'p' (Cons 'q' (Cons 'r' Empty)))
+listZip Empty Empty
+listZip (Cons 1 (Cons 2 (Cons 3 (Cons 4 (Cons 5 Empty))))) (Cons 'a' (Cons 'b' (Cons 'c' (Cons 'd' (Cons 'e' Empty)))))
+listZip (Cons 100 Empty) (Cons 'z' Empty)
+listZip (Cons 1 (Cons 2 (Cons 3 Empty))) (Cons 'x' Empty)
+listZip (Cons 7 (Cons 14 (Cons 21 Empty))) (Cons 'm' (Cons 'n' (Cons 'o' Empty)))
+
+20
+insert 4 EmptyTree
+insert 2 (Node 3 EmptyTree EmptyTree)
+insert 7 (Node 5 (Node 3 EmptyTree EmptyTree) (Node 9 EmptyTree EmptyTree))
+insert 'c' (Node 'b' (Node 'a' EmptyTree EmptyTree) (Node 'd' EmptyTree EmptyTree))
+insert 10 (Node 8 (Node 6 EmptyTree EmptyTree) (Node 12 EmptyTree EmptyTree))
+insert 1 (Node 3 (Node 2 EmptyTree EmptyTree) (Node 5 EmptyTree EmptyTree))
+insert 10 (Node 5 (Node 2 EmptyTree EmptyTree) (Node 8 EmptyTree EmptyTree))
+insert 4 (Node 5 (Node 3 EmptyTree EmptyTree) (Node 7 EmptyTree EmptyTree))
+insert 6 (Node 5 (Node 2 (Node 1 EmptyTree EmptyTree) (Node 3 EmptyTree EmptyTree)) (Node 8 (Node 7 EmptyTree EmptyTree) (Node 10 EmptyTree EmptyTree)))
+insert 'q' (Node 'm' (Node 'f' (Node 'c' EmptyTree EmptyTree) (Node 'h' EmptyTree EmptyTree)) (Node 't' (Node 'p' EmptyTree EmptyTree) (Node 'z' EmptyTree EmptyTree)))
+
+20
+natPlus Zero (Succ Zero)
+natPlus (Succ (Succ Zero)) (Succ (Succ (Succ Zero)))
+natPlus (Succ Zero) (Succ (Succ (Succ (Succ Zero))))
+natPlus (Succ (Succ (Succ Zero))) (Succ (Succ Zero))
+natMult Zero (Succ (Succ Zero))
+natMult (Succ Zero) (Succ (Succ Zero))
+natMult (Succ (Succ Zero)) (Succ (Succ (Succ Zero)))
+natMult (Succ (Succ (Succ Zero))) (Succ Zero)
+natMult (Succ (Succ Zero)) (Succ (Succ Zero))
+natMult (Succ (Succ (Succ Zero))) (Succ (Succ (Succ (Succ Zero))))
+natPlus (Succ (Succ (Succ (Succ (Succ Zero))))) (Succ (Succ (Succ Zero)))
+natPlus Zero (Succ (Succ (Succ (Succ Zero))))
+natPlus (Succ (Succ (Succ (Succ (Succ (Succ Zero)))))) (Succ Zero)
+natPlus (Succ (Succ (Succ (Succ Zero)))) (Succ (Succ (Succ (Succ (Succ Zero)))))
+natMult (Succ (Succ (Succ Zero))) (Succ (Succ Zero))
+natMult Zero (Succ (Succ Zero))
+natMult (Succ (Succ Zero)) (Succ (Succ (Succ (Succ Zero))))
+natMult (Succ (Succ (Succ (Succ Zero)))) (Succ (Succ (Succ Zero)))
+natMult (Succ (Succ (Succ (Succ (Succ Zero))))) (Succ (Succ (Succ (Succ (Succ (Succ Zero))))))
+natMult (Succ Zero) (Succ (Succ (Succ (Succ (Succ (Succ (Succ Zero)))))))
+
+20
+let t1 = Node 2 (Node 1 EmptyTree EmptyTree) (Node 3 EmptyTree EmptyTree); t2 = Node 2 (Node 1 EmptyTree EmptyTree) (Node 3 EmptyTree EmptyTree) in t1 == t2
+let t1 = Node 2 (Node 1 EmptyTree EmptyTree) (Node 3 EmptyTree EmptyTree); t2 = Node 2 (Node 4 EmptyTree EmptyTree) (Node 3 EmptyTree EmptyTree) in t1 == t2
+let t1 = Node 2 (Node 1 EmptyTree EmptyTree) (Node 3 EmptyTree EmptyTree); t2 = Node 2 (Node 1 EmptyTree EmptyTree) (Node 5 EmptyTree EmptyTree) in t1 == t2
+let t1 = EmptyTree; t2 = EmptyTree in t1 == t2
+let t1 = Node 1 EmptyTree EmptyTree; t2 = EmptyTree in t1 == t2
+let t1 = Node 1 (Node 2 EmptyTree EmptyTree) EmptyTree; t2 = Node 1 EmptyTree (Node 2 EmptyTree EmptyTree) in t1 == t2
+let t1 = Node 10 (Node 5 (Node 2 EmptyTree EmptyTree) (Node 7 EmptyTree EmptyTree)) (Node 15 (Node 12 EmptyTree EmptyTree) (Node 20 EmptyTree EmptyTree)); t2 = Node 10 (Node 5 (Node 2 EmptyTree EmptyTree) (Node 7 EmptyTree EmptyTree)) (Node 15 (Node 12 EmptyTree EmptyTree) (Node 20 EmptyTree EmptyTree)) in t1 == t2
+let t1 = Node 10 (Node 5 (Node 2 EmptyTree EmptyTree) (Node 7 EmptyTree EmptyTree)) (Node 15 (Node 12 EmptyTree EmptyTree) (Node 20 EmptyTree EmptyTree)); t2 = Node 10 (Node 5 (Node 2 EmptyTree EmptyTree) (Node 8 EmptyTree EmptyTree)) (Node 15 (Node 12 EmptyTree EmptyTree) (Node 20 EmptyTree EmptyTree)) in t1 == t2
+let t1 = Node 3 (Node 3 EmptyTree EmptyTree) (Node 3 EmptyTree EmptyTree); t2 = Node 3 (Node 3 EmptyTree EmptyTree) EmptyTree in t1 == t2
+let t1 = Node 'a' (Node 'b' EmptyTree EmptyTree) (Node 'c' EmptyTree EmptyTree); t2 = Node 'a' (Node 'b' EmptyTree EmptyTree) (Node 'c' EmptyTree EmptyTree) in t1 == t2
+
+20
+fmap (+1) (ALCons 1 2 (ALCons 3 4 ALEmpty))
+fmap (*2) (ALCons 'a' 1 (ALCons 'b' 2 ALEmpty))
+fmap (\x -> x - 1) (ALCons 10 5 (ALCons 20 15 ALEmpty))
+fmap (++ "!") (ALCons 1 "hello" (ALCons 2 "world" ALEmpty))
+fmap not (ALCons 'x' True (ALCons 'y' False ALEmpty))
+fmap length (ALCons 100 [1,2,3] (ALCons 200 [4,5] ALEmpty))
+fmap (\x -> x * x) (ALCons "one" 3 (ALCons "two" 4 ALEmpty))
+fmap even (ALCons 10 7 (ALCons 20 8 ALEmpty))
+fmap show (ALCons 5 42 (ALCons 6 100 ALEmpty))
+fmap (\x -> if x > 10 then x - 10 else x + 10) (ALCons 1 5 (ALCons 2 15 ALEmpty))
