@@ -21,17 +21,22 @@ def parse_arguments():
 
 def grade_file(hs_file):
     try:
+        userid = os.path.basename(hs_file).split("_")[1]
+        if userid == "LATE":
+            userid = os.path.basename(hs_file).split("_")[2]
+        if not userid.isnumeric():
+            raise Exception(f"Invalid filename")
         answerss = get_answerss(hs_file=hs_file, test_inputs=info["test_inputs"])
         score, comment = grade_answerss(answerss, info)
-        userid = os.path.basename(hs_file).split("_")[1]
-        if not userid.isnumeric():
-            raise Exception(f"{hs_file}\tInvalid filename")
         scores[userid] = score
         if comment is not None:
             comments[userid] = comment
         if assistance and not check_ok(hs_file, prompt, args.model):
             double_check_files.append((userid, hs_file))
     except Exception as e:
+        if userid.isnumeric():
+            scores[userid] = 0
+            comments[userid] = str(e)
         failed_files.append((hs_file, e))
 
 if __name__ == "__main__":
@@ -64,7 +69,7 @@ if __name__ == "__main__":
         failed_dir = "failed"
         os.makedirs(failed_dir, exist_ok=True)
         for f, e in failed_files:
-            print(e)
+            print(f"{f}\t{e}")
             new_filename = os.path.join(failed_dir, os.path.basename(f))
             shutil.copy(f, new_filename)
     

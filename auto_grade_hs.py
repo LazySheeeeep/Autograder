@@ -18,7 +18,7 @@ class GHCI:
         self.prompt = "ghci> "
         if self.flush():
             self.close()
-            raise Exception(f"{file}\tGHCI load error")
+            raise Exception(f"GHCI load error")
         
     def read_out(self):
         error = True
